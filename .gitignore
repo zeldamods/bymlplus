@@ -1,0 +1,5 @@
+build/
+*~
+*.i64
+*.idb
+.gdb_history
