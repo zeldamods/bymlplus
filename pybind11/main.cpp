@@ -120,7 +120,14 @@ PYBIND11_MODULE(bymlplus, m) {
       .def("getInt64", &ItemData::getInt64)
       .def("getUInt64", &ItemData::getUInt64)
       .def("getDouble", &ItemData::getDouble)
-      .def("val", &ItemData::val, py::keep_alive<0, 1>())
+      .def("val",
+           [](const ItemData& i) {
+             auto v = i.val();
+             // Forbid using val() to get containers because of lifetime issues.
+             if (std::holds_alternative<Hash>(v) || std::holds_alternative<Array>(v))
+               throw std::invalid_argument{"use getHash or getArray for container items"};
+             return v;
+           })
       .def("__repr__",
            [](const ItemData& i) { return py::str("<byml.ItemData: {}>").format(i.val()); });
 

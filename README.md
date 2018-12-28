@@ -160,8 +160,10 @@ The `getXXX` functions work exactly the same as in the C++ API.
 Alternatively, just use `val` to get the value:
 ```python
 value = item.val()
-# value is an Array, Hash, int, etc. depending on the node type
+# value is a bool, int, str etc. depending on the node type
 ```
+Important note: because of lifetime issues, the bindings prohibit using `val` for arrays and hashes.
+Use `getArray` or `getHash` for those.
 
 ## License
 This software is licensed under the terms of the GNU General Public License, version 2 or later.
