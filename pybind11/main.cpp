@@ -128,6 +128,9 @@ PYBIND11_MODULE(bymlplus, m) {
                throw std::invalid_argument{"use getHash or getArray for container items"};
              return v;
            })
+      .def("valu", &ItemData::val,
+           "Unsafe variant: same as val() but assumes that the user will keep the reader instance "
+           "valid as long as necessary.")
       .def("__repr__",
            [](const ItemData& i) { return py::str("<byml.ItemData: {}>").format(i.val()); });
 
